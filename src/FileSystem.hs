@@ -1,6 +1,6 @@
 module FileSystem (endInd, end, body,
                 slice, sliceFromBegin, sliceToEnd, groupBy, reducel,
-                writeToFile, 
+                writeToFile, write2file, append2file,
                 readFromFile, listDir, fmkdir,
                 matchString, isIn, sep2list,
                 Content(..), cbind, comma, bindWith, chainWith,
@@ -174,6 +174,21 @@ writeToFile contents file = do
         -- hPutStrLn sFile (show cc)
         -- hClose sFile
  
+
+write2file :: Path -> String -> IO ()
+write2file (Path file) content = do 
+    sFile <- openFile file WriteMode
+    hPutStrLn sFile content
+    hClose sFile
+
+append2file :: Path -> String -> IO ()
+append2file (Path file) content = do 
+    sFile <- openFile file AppendMode
+    hPutStrLn sFile content
+    hClose sFile
+
+
+
 readFromFile :: FilePath -> IO [String]
 readFromFile file = do 
         contents <- readFile file 
